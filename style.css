@@ -194,6 +194,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Добавляем переход для фильтра blur */
+    transition: filter 0.3s ease-out; /* Время размытия */
+}
+
+/* Класс для применения размытия */
+.carousel-slide.blurred img {
+    filter: blur(5px); /* Степень размытия */
 }
 
 .carousel-slide img {

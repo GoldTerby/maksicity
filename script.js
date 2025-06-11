@@ -67,31 +67,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const contentContainer = detailsElement.querySelector('.residents-list') || detailsElement.querySelector('.districts-list');
         if (!contentContainer) return;
 
-        const items = contentContainer.querySelectorAll('p, .district-item');
+        // Выбираем элементы, которые должны анимироваться.
+        // Убедитесь, что все ваши элементы списка (будь то <p> или <div>) имеют класс 'animated-item'
+        const items = contentContainer.querySelectorAll('.animated-item');
 
-        // Удаляем класс анимации у всех элементов перед повторным открытием
-        // Чтобы анимация сработала каждый раз при открытии
+        // Сначала удаляем класс анимации и сбрасываем задержку для всех элементов,
+        // чтобы анимация могла быть запущена снова при повторном открытии.
         items.forEach(item => {
             item.classList.remove('slide-in');
-            item.style.animationDelay = ''; // Сбросим задержку
+            item.style.animationDelay = ''; // Сброс индивидуальной задержки
         });
 
         if (detailsElement.open) {
-            // Если плашка открывается, добавляем класс анимации с задержкой
-            items.forEach((item, index) => {
-                // Добавляем класс animated-item, если его нет (для элементов, добавленных динамически)
-                if (!item.classList.contains('animated-item')) {
-                    item.classList.add('animated-item');
-                }
-                setTimeout(() => {
+            // Если плашка открывается
+            // Используем setTimeout, чтобы убедиться, что класс 'slide-in'
+            // добавляется после того, как браузер обработал удаление классов.
+            // Это обеспечивает корректный запуск анимации.
+            setTimeout(() => {
+                items.forEach((item, index) => {
                     item.classList.add('slide-in');
-                    item.style.animationDelay = `${index * 0.1}s`; // Задержка 0.1s на каждый элемент
-                }, 50); // Небольшая задержка, чтобы браузер успел применить сброс стилей
-            });
+                    item.style.animationDelay = `${index * 0.1}s`; // Задержка 0.1 секунды на каждый элемент
+                });
+            }, 50); // Небольшая задержка, чтобы браузер успел применить сброс стилей
         }
     }
 
-    // Добавляем слушатель событий 'toggle' для каждой плашки
+    // Добавляем слушатели событий 'toggle' для каждой плашки
     residentsDetails.addEventListener('toggle', () => {
         animateDropdownContent(residentsDetails);
     });

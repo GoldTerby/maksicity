@@ -332,14 +332,22 @@ details[open] > .dropdown-summary .indicator {
     text-align: left;
     border-top: 1px solid #3a3a3a;
     color: #ccc;
-    /* Удаляем opacity и max-height, чтобы содержимое определяло высоту */
-    /* overflow: hidden; - можно оставить, если не хотим, чтобы содержимое выходило за блок */
-    transition: padding 0.4s ease-in-out; /* Только для padding, так как высота будет авто */
+    /* Убрали max-height и opacity для автоматической высоты */
+    overflow: hidden; /* Оставляем overflow: hidden; для корректной работы анимации и скрытия при закрытии */
+    transition: padding 0.4s ease-in-out; /* Анимируем только padding, так как высота будет автоматической */
 }
 
+/* Добавляем transition для max-height, чтобы анимация открытия выглядела плавно */
+/* Устанавливаем начальное состояние скрытия */
+.residents-list, .districts-list {
+    max-height: 0;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+}
+
+/* При открытии details, устанавливаем большую max-height для анимации */
 details[open] .residents-list,
 details[open] .districts-list {
-    /* Удаляем opacity: 1; и max-height: 500px; */
+    max-height: 1000px; /* Достаточно большое значение, чтобы вместить любое содержимое */
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -367,6 +375,7 @@ details[open] .districts-list .district-item {
     animation: slideInUp 0.5s ease-out forwards;
 }
 
+/* Задержки анимации для каждого элемента */
 details[open] .residents-list p:nth-child(1),
 details[open] .districts-list .district-item:nth-child(1) {
     animation-delay: 0.1s;
@@ -384,6 +393,12 @@ details[open] .districts-list .district-item:nth-child(3) {
 details[open] .districts-list .district-item:nth-child(4) {
     animation-delay: 0.4s;
 }
+/* Добавляем задержки для следующих элементов, если они появятся */
+details[open] .residents-list p:nth-child(n+4),
+details[open] .districts-list .district-item:nth-child(n+5) {
+    animation-delay: calc(0.1s * (var(--item-index) + 3)); /* Динамическая задержка */
+}
+
 
 .residents-list p {
     margin: 8px 0;

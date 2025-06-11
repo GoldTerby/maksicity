@@ -25,11 +25,10 @@ body {
     margin-bottom: 20px;
 }
 
-/* НОВАЯ СЕКЦИЯ: Обертка для заголовка города с плашкой */
+/* Обертка для заголовка города с плашкой */
 .city-title-section {
     padding: 20px 30px; /* Внутренние отступы */
     border-radius: 15px; /* Скругленные углы */
-
     margin-bottom: 30px; /* Отступ после плашки */
     display: inline-block; /* Позволяет плашке обернуть контент по ширине */
     width: fit-content; /* Ширина по содержимому */
@@ -41,7 +40,6 @@ body {
 /* Заголовок города - теперь содержит изображение */
 .city-title {
     margin: 0; /* Убираем стандартные отступы заголовка */
-    /* Убраны текстовые стили, так как теперь это изображение */
 }
 
 /* Стили для нового изображения логотипа */
@@ -146,7 +144,6 @@ body {
     max-width: 100%;
     height: auto;
     display: block;
-    /* Эффект свечения убран, как и просили */
 }
 
 .minecraft-secondary-render {
@@ -155,7 +152,6 @@ body {
     right: -20px;
     max-width: 80%;
     opacity: 0.3;
-    /* Эффект свечения убран */
     z-index: 0;
 }
 
@@ -332,27 +328,19 @@ details[open] > .dropdown-summary .indicator {
     text-align: left;
     border-top: 1px solid #3a3a3a;
     color: #ccc;
-    /* Убрали max-height и opacity для автоматической высоты */
-    overflow: hidden; /* Оставляем overflow: hidden; для корректной работы анимации и скрытия при закрытии */
-    transition: padding 0.4s ease-in-out; /* Анимируем только padding, так как высота будет автоматической */
-}
-
-/* Добавляем transition для max-height, чтобы анимация открытия выглядела плавно */
-/* Устанавливаем начальное состояние скрытия */
-.residents-list, .districts-list {
-    max-height: 0;
+    max-height: 0; /* Изначально скрыто */
+    overflow: hidden;
     transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
 }
 
-/* При открытии details, устанавливаем большую max-height для анимации */
 details[open] .residents-list,
 details[open] .districts-list {
-    max-height: 1000px; /* Достаточно большое значение, чтобы вместить любое содержимое */
+    max-height: 1000px; /* Достаточно большое значение для разворачивания */
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
-/* Анимация slideInUp остается для эффекта появления элементов */
+/* Анимация slideInUp */
 @keyframes slideInUp {
     from {
         opacity: 0;
@@ -364,41 +352,16 @@ details[open] .districts-list {
     }
 }
 
-.residents-list p,
-.districts-list .district-item {
+/* Элементы, которые будут анимироваться при появлении */
+.animated-item {
     opacity: 0;
     transform: translateY(20px);
 }
 
-details[open] .residents-list p,
-details[open] .districts-list .district-item {
+/* Класс, который будет добавляться JavaScript'ом для запуска анимации */
+.animated-item.slide-in {
     animation: slideInUp 0.5s ease-out forwards;
 }
-
-/* Задержки анимации для каждого элемента */
-details[open] .residents-list p:nth-child(1),
-details[open] .districts-list .district-item:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-details[open] .residents-list p:nth-child(2),
-details[open] .districts-list .district-item:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-details[open] .residents-list p:nth-child(3),
-details[open] .districts-list .district-item:nth-child(3) {
-    animation-delay: 0.3s;
-}
-details[open] .districts-list .district-item:nth-child(4) {
-    animation-delay: 0.4s;
-}
-/* Добавляем задержки для следующих элементов, если они появятся */
-details[open] .residents-list p:nth-child(n+4),
-details[open] .districts-list .district-item:nth-child(n+5) {
-    animation-delay: calc(0.1s * (var(--item-index) + 3)); /* Динамическая задержка */
-}
-
 
 .residents-list p {
     margin: 8px 0;
